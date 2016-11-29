@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">InventoryApp</string>
+    <string name="change_image">button click</string>
+    <string name="new_product_name_text">Product Name</string>
+    <string name="new_product_qty_text">Starting Inventory</string>
+    <string name="new_product_price_text">Price</string>
+    <string name="new_product_image_text">Image</string>
+    <string name="change_image_button_text">Change Image</string>
+    <string name="new_product_vendor_text">Vendor E-mail</string>
+    <string name="add_new_product_botton_text">Add New Product!</string>
+    <string name="no_products_in_list">No Producs, please enter one.</string>
+</resources>
