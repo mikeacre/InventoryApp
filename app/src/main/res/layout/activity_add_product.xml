@@ -20,7 +20,8 @@
             android:id="@+id/new_product_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:inputType="text"/>
     </LinearLayout>
 
     <LinearLayout
@@ -33,13 +34,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/new_product_qty_text" />
+            android:text="@string/new_product_qty_text"
+            android:id="@+id/detail_product_inventory_text"/>
 
         <EditText
             android:id="@+id/new_product_qty"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:maxLines="1"
+            android:inputType="number"/>
     </LinearLayout>
 
     <LinearLayout
@@ -52,13 +56,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:inputType="numberDecimal"
             android:text="@string/new_product_price_text" />
 
         <EditText
             android:id="@+id/new_product_price"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:inputType="text"/>
     </LinearLayout>
 
     <LinearLayout
@@ -78,11 +84,26 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/new_product_image_text" />
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/change_image_button_text"
-                android:id="@+id/change_image_btn"/>
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/change_image_button_text"
+                    android:id="@+id/change_image_btn"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/take_image_button_text"
+                    android:id="@+id/take_image_btn"/>
+
+
+            </LinearLayout>
         </LinearLayout>
 
         <ImageView
@@ -103,13 +124,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/new_product_vendor_text" />
+            android:text="@string/new_product_vendor_text"
+            android:inputType="textEmailAddress"/>
 
         <EditText
             android:id="@+id/new_product_vendor"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:inputType="text"/>
     </LinearLayout>
     <Button
         android:layout_width="match_parent"

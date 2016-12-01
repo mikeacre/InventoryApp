@@ -9,9 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
-/**
- * {@link ContentProvider} for Pets app.
- */
 public class InventoryProvider extends ContentProvider {
 
     /** Tag for the log messages */
@@ -33,9 +30,6 @@ public class InventoryProvider extends ContentProvider {
      */
     @Override
     public boolean onCreate() {
-        // TODO: Create and initialize a PetDbHelper object to gain access to the pets database.
-        // Make sure the variable is a global variable, so it can be referenced from other
-        // ContentProvider methods.
         inventoryDbHelper = new InventoryReader(getContext());
         return true;
     }
@@ -100,8 +94,9 @@ public class InventoryProvider extends ContentProvider {
     public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
 
         SQLiteDatabase database = inventoryDbHelper.getReadableDatabase();
-        int newid = database.update(InventoryContract.PATH_INVENTORY, contentValues, selection, selectionArgs);
-        return newid;
+        database.update(InventoryContract.PATH_INVENTORY, contentValues, selection, selectionArgs);
+        getContext().getContentResolver().notifyChange(uri, null);
+        return 1;
     }
 
     /**

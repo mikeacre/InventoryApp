@@ -11,6 +11,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +28,7 @@ import com.example.mikeacre.inventoryapp.Data.InventoryReader;
 public class InventoryHome extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
 
-    SimpleCursorAdapter mAdapter;
+    ProductAdapter mAdapter;
     public static final int INV_LOADER = 0;
     static final String[] PROJECTION = new String[]{
             InventoryEntry._ID,
@@ -42,7 +44,9 @@ public class InventoryHome extends AppCompatActivity implements LoaderManager.Lo
         setContentView(R.layout.activity_inventory_home);
 
 
-
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -56,10 +60,14 @@ public class InventoryHome extends AppCompatActivity implements LoaderManager.Lo
         ListView inventoryList = (ListView) findViewById(R.id.inventory_list_view);
         inventoryList.setEmptyView(findViewById(R.id.empty_list_view));
 
-        String[] fromColumns = {InventoryEntry.COLUMN_PRODUCT_NAME, InventoryEntry.COLUMN_PRICE, InventoryEntry.COLUMN_QOH};
+        /*String[] fromColumns = {InventoryEntry.COLUMN_PRODUCT_NAME, InventoryEntry.COLUMN_PRICE, InventoryEntry.COLUMN_QOH};
         int[] views = {R.id.product_name, R.id.product_price, R.id.product_qoh};
         mAdapter = new SimpleCursorAdapter(this, R.layout.inventory_list_item, null, fromColumns, views, 0);
+        */
+        Cursor cursor = null;
+        mAdapter = new ProductAdapter(getBaseContext(), cursor);
         inventoryList.setAdapter(mAdapter);
+
         inventoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -70,6 +78,7 @@ public class InventoryHome extends AppCompatActivity implements LoaderManager.Lo
                 startActivity(intent);
             }
         });
+
         getLoaderManager().initLoader(INV_LOADER, null, this);
     }
 
@@ -88,5 +97,9 @@ public class InventoryHome extends AppCompatActivity implements LoaderManager.Lo
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
 
+    }
+
+    public void sellOne(int id){
+        //this
     }
 }

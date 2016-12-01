@@ -3,28 +3,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:weightSum="3">
+    android:weightSum="6">
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
         android:orientation="vertical"
-        android:weightSum="2"
-        android:layout_weight="2">
+        android:weightSum="3"
+        android:layout_weight="3">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
+            android:textColor="@android:color/black"
+            android:textAllCaps="true"
+            android:textSize="25sp"
             android:id="@+id/product_name"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:textColor="@android:color/holo_green_dark"
             android:layout_weight="1"
             android:id="@+id/product_price"/>
     </LinearLayout>
     <TextView
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
         android:layout_weight="1"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"
+        android:text="@string/qty_text_item"
+        />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:textSize="30sp"
+        android:textColor="@android:color/holo_red_light"
         android:id="@+id/product_qoh"/>
+    <TextView
+        android:background="@android:color/darker_gray"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/sellbutton"
+        android:text="@string/item_sell_btn"
+        android:textColor="@android:color/holo_red_dark"
+        android:gravity="center"/>
 
 </LinearLayout>

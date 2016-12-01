@@ -18,7 +18,7 @@ public class InventoryReader extends SQLiteOpenHelper{
     }
     public void onCreate(SQLiteDatabase db){
 
-        String SQL_CREATE_PETS_TABLE =  "CREATE TABLE " + InventoryContract.InventoryEntry.TABLE_NAME + " ("
+        String SQL_CREATE_INVENTORY_TABLE =  "CREATE TABLE " + InventoryContract.InventoryEntry.TABLE_NAME + " ("
                 + InventoryContract.InventoryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + InventoryContract.InventoryEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
                 + InventoryContract.InventoryEntry.COLUMN_PICTURE + " TEXT, "
@@ -27,7 +27,7 @@ public class InventoryReader extends SQLiteOpenHelper{
                 + InventoryContract.InventoryEntry.COLUMN_VENDOR_EMAIL + " TEXT,"
                 + InventoryContract.InventoryEntry.COLUMN_REORDER_QTY + " INTEGER);";
 
-        db.execSQL(SQL_CREATE_PETS_TABLE);
+        db.execSQL(SQL_CREATE_INVENTORY_TABLE);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
