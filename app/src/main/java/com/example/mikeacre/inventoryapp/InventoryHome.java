@@ -60,10 +60,6 @@ public class InventoryHome extends AppCompatActivity implements LoaderManager.Lo
         ListView inventoryList = (ListView) findViewById(R.id.inventory_list_view);
         inventoryList.setEmptyView(findViewById(R.id.empty_list_view));
 
-        /*String[] fromColumns = {InventoryEntry.COLUMN_PRODUCT_NAME, InventoryEntry.COLUMN_PRICE, InventoryEntry.COLUMN_QOH};
-        int[] views = {R.id.product_name, R.id.product_price, R.id.product_qoh};
-        mAdapter = new SimpleCursorAdapter(this, R.layout.inventory_list_item, null, fromColumns, views, 0);
-        */
         Cursor cursor = null;
         mAdapter = new ProductAdapter(getBaseContext(), cursor);
         inventoryList.setAdapter(mAdapter);

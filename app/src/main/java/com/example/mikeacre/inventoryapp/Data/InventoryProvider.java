@@ -11,7 +11,9 @@ import android.util.Log;
 
 public class InventoryProvider extends ContentProvider {
 
-    /** Tag for the log messages */
+    /**
+     * Tag for the log messages
+     */
     public static final String LOG_TAG = InventoryProvider.class.getSimpleName();
 
     public static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -22,7 +24,7 @@ public class InventoryProvider extends ContentProvider {
 
     static {
         sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY, InventoryContract.PATH_INVENTORY, INVENTORY);
-        sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY, InventoryContract.PATH_INVENTORY+"/#", INVENTORY_ID);
+        sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY, InventoryContract.PATH_INVENTORY + "/#", INVENTORY_ID);
     }
 
     /**
@@ -45,14 +47,14 @@ public class InventoryProvider extends ContentProvider {
         Cursor cursor;
         int match = sUriMatcher.match(uri);
 
-        switch(match) {
+        switch (match) {
             case INVENTORY:
                 cursor = database.query(InventoryContract.InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
                 break;
             case INVENTORY_ID:
-                Log.e("WE in:","the right place");
-                selection = InventoryContract.InventoryEntry._ID +"=?";
-                selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
+                Log.e("WE in:", "the right place");
+                selection = InventoryContract.InventoryEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 cursor = database.query(InventoryContract.InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             default:
@@ -72,7 +74,7 @@ public class InventoryProvider extends ContentProvider {
 
         int match = sUriMatcher.match(uri);
         SQLiteDatabase database = inventoryDbHelper.getReadableDatabase();
-        switch(match){
+        switch (match) {
             case INVENTORY:
                 long newrow = database.insert(InventoryContract.PATH_INVENTORY, null, contentValues);
                 break;
@@ -84,7 +86,6 @@ public class InventoryProvider extends ContentProvider {
 
         return null;
     }
-
 
 
     /**
@@ -105,12 +106,10 @@ public class InventoryProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         SQLiteDatabase database = inventoryDbHelper.getReadableDatabase();
-        int delid = database.delete(InventoryContract.PATH_INVENTORY, selection+"=?",selectionArgs);
-        if(delid < 0)
-        {
+        int delid = database.delete(InventoryContract.PATH_INVENTORY, selection + "=?", selectionArgs);
+        if (delid < 0) {
             return 6;
-        }
-        else
+        } else
             return delid;
     }
 

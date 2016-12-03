@@ -44,7 +44,7 @@ public class ProductDetail extends AppCompatActivity {
     private boolean permission = true;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
 
@@ -54,9 +54,9 @@ public class ProductDetail extends AppCompatActivity {
             permisionText.setVisibility(View.VISIBLE);
         }
 
-                Intent intent = getIntent();
+        Intent intent = getIntent();
         Uri currentInvUri = intent.getData();
-        String[] projection = {InventoryEntry._ID,InventoryEntry.COLUMN_PRODUCT_NAME, InventoryEntry.COLUMN_PICTURE,InventoryEntry.COLUMN_QOH,InventoryEntry.COLUMN_PRICE,InventoryEntry.COLUMN_VENDOR_EMAIL,InventoryEntry.COLUMN_REORDER_QTY};
+        String[] projection = {InventoryEntry._ID, InventoryEntry.COLUMN_PRODUCT_NAME, InventoryEntry.COLUMN_PICTURE, InventoryEntry.COLUMN_QOH, InventoryEntry.COLUMN_PRICE, InventoryEntry.COLUMN_VENDOR_EMAIL, InventoryEntry.COLUMN_REORDER_QTY};
         Log.e("URI:: ", currentInvUri.toString());
         Cursor cursor = getContentResolver().query(currentInvUri, projection, null, null, null, null);
 
@@ -70,9 +70,9 @@ public class ProductDetail extends AppCompatActivity {
         thisIdLong = cursor.getLong(0);
         prodName.setText(cursor.getString(1));
         String uriString = cursor.getString(2);
-        prodQty.setText(getString(R.string.detail_qty_text)+cursor.getString(3));
+        prodQty.setText(getString(R.string.detail_qty_text) + cursor.getString(3));
         currentQty = Integer.parseInt(cursor.getString(3));
-        prodPrice.setText(getString(R.string.detail_price_text)+cursor.getString(4));
+        prodPrice.setText(getString(R.string.detail_price_text) + cursor.getString(4));
         Uri imageUri = Uri.parse(uriString);
 
         //
@@ -125,13 +125,12 @@ public class ProductDetail extends AppCompatActivity {
         orderIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
 
         orderBtn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 startActivity(orderIntent);
             }
         });
-        if(permission) {
+        if (permission) {
             final InputStream imageStream;
             try {
                 imageStream = getContentResolver().openInputStream(imageUri);
@@ -140,45 +139,41 @@ public class ProductDetail extends AppCompatActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-        }
-
+        } else
+            prodImg.setImageResource(R.mipmap.ic_launcher);
         cursor.close();
-
-
     }
 
     private void adjustQty(String dir) {
         int newQoh;
-        if(dir == "up")
+        if (dir == "up")
             newQoh = currentQty + changeqty;
-        else if((currentQty - changeqty)< 0)
+        else if ((currentQty - changeqty) < 0)
             newQoh = 0;
         else
             newQoh = currentQty - changeqty;
 
-
         ContentValues adjustValue = new ContentValues();
         adjustValue.put(InventoryEntry.COLUMN_QOH, newQoh);
 
-        String selection = InventoryEntry._ID+"=?";
-        String[] selArgs = new String[] {thisId};
+        String selection = InventoryEntry._ID + "=?";
+        String[] selArgs = new String[]{thisId};
         getContentResolver().update(InventoryEntry.CONTENT_URI, adjustValue, selection, selArgs);
         currentQty = newQoh;
-        prodQty.setText(getString(R.string.detail_qty_text)+newQoh);
+        prodQty.setText(getString(R.string.detail_qty_text) + newQoh);
     }
 
-    public void changeValue(char dir){
+    public void changeValue(char dir) {
         EditText qtyTxt = (EditText) findViewById(R.id.prod_detail_adjust_qty_txt);
         Editable editQtyTxt = qtyTxt.getText();
 
         Integer integer = Integer.parseInt(editQtyTxt.toString());
         int currtext = integer.intValue();
-        Log.e(" ", "   "+qtyTxt.toString());// Integer.parseInt(qtyTxt.toString());
-        if(dir == 'a') {
+        Log.e(" ", "   " + qtyTxt.toString());// Integer.parseInt(qtyTxt.toString());
+        if (dir == 'a') {
             qtyTxt.setText(currtext + 1 + "");
             changeqty++;
-        }
-        else if (currtext > 1) {
+        } else if (currtext > 1) {
             qtyTxt.setText(currtext - 1 + "");
             changeqty--;
         }
@@ -199,11 +194,11 @@ public class ProductDetail extends AppCompatActivity {
                 Uri currentInvUri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, thisIdLong);
                 intent.setData(currentInvUri);
                 startActivity(intent);
-                 return true;
+                return true;
             case R.id.action_delete_item:
-                    getContentResolver().delete(InventoryEntry.CONTENT_URI, InventoryEntry._ID, new String[]{thisId});
-                    NavUtils.navigateUpFromSameTask(this);
-                    return true;
+                getContentResolver().delete(InventoryEntry.CONTENT_URI, InventoryEntry._ID, new String[]{thisId});
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;

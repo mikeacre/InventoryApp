@@ -9,6 +9,7 @@ import android.provider.BaseColumns;
 
 public class InventoryContract {
 
+    //Empty constructor so class is not initialized
     private InventoryContract(){}
 
     public static final String CONTENT_AUTHORITY = "com.example.mikeacre.inventoryapp";

@@ -28,7 +28,7 @@ public class ProductAdapter extends CursorAdapter {
     public ProductAdapter(Context context, Cursor c) {
         super(context, c);
         cursorInflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.mContext=context;
+        this.mContext = context;
     }
 
     @Override
@@ -60,14 +60,14 @@ public class ProductAdapter extends CursorAdapter {
                     ContentValues values = new ContentValues();
                     values.put(InventoryContract.InventoryEntry.COLUMN_QOH, currQty);
                     mContext.getContentResolver().update(currUri, values, null, null);
-                    textQoh.setText(""+currQty);
+                    textQoh.setText("" + currQty);
                 }
             }
         });
 
     }
 
-    public void sellOne(){
+    public void sellOne() {
 
     }
 }
