@@ -1,8 +1,11 @@
 package com.example.mikeacre.inventoryapp;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -10,9 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
-import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -47,6 +48,12 @@ public class ProductDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+
+        Context context = getBaseContext();
+
+
+
+
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             permission = false;
@@ -196,9 +203,23 @@ public class ProductDetail extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.action_delete_item:
-                getContentResolver().delete(InventoryEntry.CONTENT_URI, InventoryEntry._ID, new String[]{thisId});
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setTitle("Delete");
+                alertDialog.setMessage("Delete?");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Delete",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                getContentResolver().delete(InventoryEntry.CONTENT_URI, InventoryEntry._ID, new String[]{thisId});
+                                NavUtils.navigateUpFromSameTask(ProductDetail.this);
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //just close window
+                    }
+                });
+                alertDialog.show();
+                            return true;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;

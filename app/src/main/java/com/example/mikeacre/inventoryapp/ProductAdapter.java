@@ -22,7 +22,7 @@ public class ProductAdapter extends CursorAdapter {
 
     private LayoutInflater cursorInflator;
     private Context mContext;
-    private int thisId;
+
     public TextView sellButton;
 
     public ProductAdapter(Context context, Cursor c) {
@@ -38,6 +38,7 @@ public class ProductAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        final int thisId;
         TextView textName = (TextView) view.findViewById(R.id.product_name);
         TextView textPirce = (TextView) view.findViewById(R.id.product_price);
         final TextView textQoh = (TextView) view.findViewById(R.id.product_qoh);
@@ -59,15 +60,11 @@ public class ProductAdapter extends CursorAdapter {
                     currQty = currQty - 1;
                     ContentValues values = new ContentValues();
                     values.put(InventoryContract.InventoryEntry.COLUMN_QOH, currQty);
-                    mContext.getContentResolver().update(currUri, values, null, null);
-                    textQoh.setText("" + currQty);
+                    mContext.getContentResolver().update(currUri, values, InventoryContract.InventoryEntry._ID+"=?", new String[]{thisId+""});
+                   // textQoh.setText("" + currQty);
                 }
             }
         });
-
-    }
-
-    public void sellOne() {
 
     }
 }
