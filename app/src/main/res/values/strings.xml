@@ -27,4 +27,5 @@
     <string name="inventory_text_edit_screen">Current QOH</string>
     <string name="edit_button_text">Edit Product!</string>
     <string name="item_sell_btn">[Sell]</string>
+    <string name="allow_media_text">Please allow acess to media to see image.</string>
 </resources>

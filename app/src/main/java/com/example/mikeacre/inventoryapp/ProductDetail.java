@@ -41,11 +41,18 @@ public class ProductDetail extends AppCompatActivity {
     private int currentQty;
     private int changeqty = 1;
     private TextView prodQty;
+    private boolean permission = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permission = false;
+            TextView permisionText = (TextView) findViewById(R.id.no_permission);
+            permisionText.setVisibility(View.VISIBLE);
+        }
 
                 Intent intent = getIntent();
         Uri currentInvUri = intent.getData();
@@ -124,14 +131,15 @@ public class ProductDetail extends AppCompatActivity {
                 startActivity(orderIntent);
             }
         });
-
-        final InputStream imageStream;
-        try {
-            imageStream = getContentResolver().openInputStream(imageUri);
-            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-            prodImg.setImageBitmap(selectedImage);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if(permission) {
+            final InputStream imageStream;
+            try {
+                imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                prodImg.setImageBitmap(selectedImage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
         cursor.close();
