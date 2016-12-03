@@ -153,15 +153,18 @@ public class AddProduct extends AppCompatActivity {
 
     public void displayImage(Uri thisUri) {
 
-        try {
-            if (!thisUri.toString().equals("")) {
-                prodImgUri = thisUri;
-                final InputStream imageStream = getContentResolver().openInputStream(thisUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                newProductImage.setImageBitmap(selectedImage);
+        if(!thisUri.equals(null)) {
+
+            try {
+                if (!thisUri.toString().equals("")) {
+                    prodImgUri = thisUri;
+                    final InputStream imageStream = getContentResolver().openInputStream(thisUri);
+                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                    newProductImage.setImageBitmap(selectedImage);
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
